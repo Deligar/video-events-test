@@ -1,0 +1,21 @@
+.container {
+    display: flex;
+}
+
+.left-pane {
+    display: flex;
+    width: 50%;
+    background: #333333;
+    margin: 1rem;
+    padding: 1rem;
+    place-items: center;
+    justify-content: center;
+}
+
+.right-pane {
+    width: 50%;
+    background: #ffffff;
+    margin: 1rem;
+    overflow-y: auto;
+    max-height: 100%;
+}

@@ -1,0 +1,23 @@
+.list-button {
+    display: inline-block;
+    height: 2rem;
+    width: 100%;
+    background-color: #f0f0f0;
+    border: 1px solid #323232;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.list-button:hover {
+    background-color: #dcdcdc;
+    transition-duration: 100ms;
+}
+
+.list-button:focus {
+    outline: 1px transparent;
+}
+
+.list-button:active {
+    background-color: #c8c8c8;
+    transition: none 0ms;
+}

@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+}
+
+.video-canvas {
+    position: absolute;
+    z-index: 15;
+    pointer-events: none;
+}
