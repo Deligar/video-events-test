@@ -1,8 +1,8 @@
-import {ZoneType} from "../types/timestampTypes";
+import {Zone} from "../types/timestampTypes";
 
 export const drawRect = (
     context: CanvasRenderingContext2D | null | undefined,
-    zone: ZoneType,
+    zone: Zone,
     fractions: { height: number, width: number }
 ) => {
     if (context) {

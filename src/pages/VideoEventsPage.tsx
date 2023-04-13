@@ -1,30 +1,38 @@
-import React, {SyntheticEvent, useRef, useState} from 'react';
+import React, {SyntheticEvent, useEffect, useRef} from 'react';
+import {useDispatch, useSelector} from 'react-redux'
 import './VideoEventsPage.css'
 import VideoWithCanvas from "../containers/VideoWithCanvas/VideoWithCanvas";
-import {TIMESTAMPS_URL, VIDEO_URL} from "../consts/urls";
+import {VIDEO_URL} from "../consts/urls";
 import TimestampList from "../containers/TimestampList/TimestampList";
-import {useGetTimestamps} from "../hooks/useGetTimestamps";
-import {TimeStampType} from "../types/timestampTypes";
+import {Timestamp} from "../types/timestampTypes";
+import {getTimestamps} from "../store/timestamps/actions";
+import {selectTimestamps} from "../store/timestamps/selectors";
+import {setRectangles} from "../store/rectangles/actions";
 
 const VideoEventsPage = () => {
-    const timestamps = useGetTimestamps(TIMESTAMPS_URL)
+    const dispatch = useDispatch()
+    const {timestamps} = useSelector(selectTimestamps)
+
+    useEffect(() => {
+        dispatch(getTimestamps())
+    }, [dispatch])
+
     const videoRef = useRef<HTMLVideoElement>(null)
 
-    const [rectangles, setRectangles] = useState<TimeStampType[]>([])
-
-    const onListItemClick = (timestamp: TimeStampType) => () => {
+    const onListItemClick = (timestamp: Timestamp) => () => {
         if (videoRef.current) {
             videoRef.current.currentTime = timestamp.timestamp / 1000
         }
     }
 
-    const filterCurrentTimestamps = (time: number, timestamps: TimeStampType[] | null) => {
+    const filterCurrentTimestamps = (time: number, timestamps: Timestamp[] | null) => {
         return timestamps?.filter(ts => (ts.timestamp <= time && time < ts.timestamp + ts.duration))
     }
 
     const onVideoTimeUpdated = (event: SyntheticEvent<HTMLVideoElement>) => {
         const target = event.target as HTMLVideoElement
-        setRectangles(filterCurrentTimestamps(target.currentTime * 1000, timestamps) || [])
+        const filteredTimestamps = filterCurrentTimestamps(target.currentTime * 1000, timestamps) || []
+        dispatch(setRectangles(filteredTimestamps))
     }
 
     return (
@@ -33,13 +41,11 @@ const VideoEventsPage = () => {
                 <VideoWithCanvas
                     ref={videoRef}
                     src={VIDEO_URL}
-                    rectangles={rectangles}
                     onTimeUpdate={onVideoTimeUpdated}
                 />
             </div>
             <div className='right-pane'>
                 <TimestampList
-                    timestamps={timestamps}
                     onListItemClick={onListItemClick}
                 />
             </div>

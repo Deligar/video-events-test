@@ -1,5 +1,5 @@
-import {TimeStampType} from "../types/timestampTypes";
+import {Timestamp} from "../types/timestampTypes";
 
-export const timestampToDate = (timestamp: TimeStampType): Date => {
+export const timestampToDate = (timestamp: Timestamp): Date => {
     return new Date(timestamp.timestamp)
 }

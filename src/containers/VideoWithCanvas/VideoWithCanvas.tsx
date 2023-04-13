@@ -1,17 +1,19 @@
 import React, {ForwardedRef, SyntheticEvent, useEffect, useRef, useState} from 'react';
 import VideoPlayer from "../../components/VideoPlayer/VideoPlayer";
 import './VideoWithCanvas.css'
-import {TimeStampType} from "../../types/timestampTypes";
 import {drawRect} from "../../utils/drawRect";
+import {useSelector} from "react-redux";
+import {selectRectangles} from "../../store/rectangles/selectors";
 
 interface VideoWithCanvasProps {
     src: string,
-    rectangles: TimeStampType[],
     onTimeUpdate: (event: SyntheticEvent<HTMLVideoElement>) => void,
 }
 
-const VideoWithCanvas = React.forwardRef(({src, rectangles, onTimeUpdate}: VideoWithCanvasProps,
+const VideoWithCanvas = React.forwardRef(({src, onTimeUpdate}: VideoWithCanvasProps,
                                           ref: ForwardedRef<HTMLVideoElement>) => {
+    const {rectangles} = useSelector(selectRectangles)
+
     const canvasRef = useRef<HTMLCanvasElement>(null)
     const [canvasContext, setCanvasContext] = useState<CanvasRenderingContext2D | null | undefined>()
 

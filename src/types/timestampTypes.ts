@@ -1,13 +1,13 @@
-export interface ZoneType {
+export interface Zone {
     left: number,
     top: number,
     width: number,
     height: number
 }
 
-export interface TimeStampType {
+export interface Timestamp {
     id: number,
     timestamp: number,
     duration: number,
-    zone: ZoneType
+    zone: Zone
 }

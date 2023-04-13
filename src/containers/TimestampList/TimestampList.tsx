@@ -1,14 +1,17 @@
 import React from 'react';
 import ListItem from "../../components/ListItem/ListItem";
 import {timestampToDate} from "../../utils/timestampToDate";
-import {TimeStampType} from "../../types/timestampTypes";
+import {Timestamp} from "../../types/timestampTypes";
+import {useSelector} from "react-redux";
+import {selectTimestamps} from "../../store/timestamps/selectors";
 
 interface TimestampListProps {
-    timestamps: TimeStampType[] | null,
-    onListItemClick: (timestamp: TimeStampType) => () => void
+    onListItemClick: (timestamp: Timestamp) => () => void
 }
 
-const TimestampList = ({timestamps, onListItemClick}:TimestampListProps) => {
+const TimestampList = ({onListItemClick}: TimestampListProps) => {
+    const {timestamps} = useSelector(selectTimestamps)
+
     return (
         <div>
             {timestamps?.map(timestamp => <ListItem

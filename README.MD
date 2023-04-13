@@ -11,9 +11,12 @@ ____
 - HTML5
 - React
 - TypeScript
+- Redux
+- Redux-Saga
+- Axios
 - CSS3
 
-*Обратите внимание, что эта версия приложения не включает использование Redux и Redux-Saga. Если вы хотите попробовать приложение с этими библиотеками, смотрите последний коммит.*
+*Если вы хотите попробовать приложение без Redux и Redux-Saga, смотрите предыдущий коммит.*
 
 ## Установка
 
@@ -51,9 +54,12 @@ ____
 - HTML5
 - React
 - TypeScript
+- Redux
+- Redux-Saga
+- Axios
 - CSS3
 
-*Note that this version of the application does not include the use of Redux and Redux-Saga. If you're interested in seeing the application with these libraries, please refer to the latest commit.*
+*If you're interested in the application without Redux and Redux-Saga, please check the previous commit.*
 
 ## Installation
 
