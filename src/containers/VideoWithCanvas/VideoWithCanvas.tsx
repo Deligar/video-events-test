@@ -4,6 +4,7 @@ import './VideoWithCanvas.css'
 import {drawRect} from "../../utils/drawRect";
 import {useSelector} from "react-redux";
 import {selectRectangles} from "../../store/rectangles/selectors";
+import VideoCanvas from "../../components/VideoCanvas/VideoCanvas";
 
 interface VideoWithCanvasProps {
     src: string,
@@ -38,8 +39,7 @@ const VideoWithCanvas = React.forwardRef(({src, onTimeUpdate}: VideoWithCanvasPr
     return (
         <div className={'container'}>
             <VideoPlayer ref={ref} src={src} onTimeUpdate={onTimeUpdate}/>
-            <canvas
-                className={'video-canvas'}
+            <VideoCanvas
                 ref={canvasRef}
                 height={ref && 'current' in ref ? ref.current?.clientHeight : 0}
                 width={ref && 'current' in ref ? ref.current?.clientWidth : 0}

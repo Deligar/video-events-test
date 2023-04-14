@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import ListItem from "../../components/ListItem/ListItem";
 import {timestampToDate} from "../../utils/timestampToDate";
 import {Timestamp} from "../../types/timestampTypes";
@@ -9,9 +9,8 @@ interface TimestampListProps {
     onListItemClick: (timestamp: Timestamp) => () => void
 }
 
-const TimestampList = ({onListItemClick}: TimestampListProps) => {
+const TimestampList = memo(({onListItemClick}: TimestampListProps) => {
     const {timestamps} = useSelector(selectTimestamps)
-
     return (
         <div>
             {timestamps?.map(timestamp => <ListItem
@@ -21,6 +20,6 @@ const TimestampList = ({onListItemClick}: TimestampListProps) => {
             />)}
         </div>
     );
-};
+});
 
 export default TimestampList;

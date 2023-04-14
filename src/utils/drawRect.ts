@@ -5,14 +5,14 @@ export const drawRect = (
     zone: Zone,
     fractions: { height: number, width: number }
 ) => {
-    if (context) {
-        context.strokeStyle = 'green';
-        context.lineWidth = 5;
-        context.strokeRect(
-            zone.left * fractions.width,
-            zone.top * fractions.height,
-            zone.width * fractions.width,
-            zone.height * fractions.height
-        )
-    }
+    if (!context) return
+
+    context.strokeStyle = 'green';
+    context.lineWidth = 5;
+    context.strokeRect(
+        zone.left * fractions.width,
+        zone.top * fractions.height,
+        zone.width * fractions.width,
+        zone.height * fractions.height
+    )
 }

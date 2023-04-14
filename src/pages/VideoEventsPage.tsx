@@ -1,4 +1,4 @@
-import React, {SyntheticEvent, useEffect, useRef} from 'react';
+import React, {SyntheticEvent, useCallback, useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import './VideoEventsPage.css'
 import VideoWithCanvas from "../containers/VideoWithCanvas/VideoWithCanvas";
@@ -8,32 +8,30 @@ import {Timestamp} from "../types/timestampTypes";
 import {getTimestamps} from "../store/timestamps/actions";
 import {selectTimestamps} from "../store/timestamps/selectors";
 import {setRectangles} from "../store/rectangles/actions";
+import {filterCurrentTimestamps} from "../utils/timestampUtils";
+import {MILLISECONDS_IN_SECOND} from "../consts/consts";
 
 const VideoEventsPage = () => {
     const dispatch = useDispatch()
     const {timestamps} = useSelector(selectTimestamps)
 
+    const videoRef = useRef<HTMLVideoElement>(null)
+
     useEffect(() => {
         dispatch(getTimestamps())
     }, [dispatch])
 
-    const videoRef = useRef<HTMLVideoElement>(null)
-
-    const onListItemClick = (timestamp: Timestamp) => () => {
+    const onListItemClick = useCallback((timestamp: Timestamp) => () => {
         if (videoRef.current) {
-            videoRef.current.currentTime = timestamp.timestamp / 1000
+            videoRef.current.currentTime = timestamp.timestamp / MILLISECONDS_IN_SECOND
         }
-    }
+    }, [])
 
-    const filterCurrentTimestamps = (time: number, timestamps: Timestamp[] | null) => {
-        return timestamps?.filter(ts => (ts.timestamp <= time && time < ts.timestamp + ts.duration))
-    }
-
-    const onVideoTimeUpdated = (event: SyntheticEvent<HTMLVideoElement>) => {
+    const onVideoTimeUpdated = useCallback((event: SyntheticEvent<HTMLVideoElement>) => {
         const target = event.target as HTMLVideoElement
-        const filteredTimestamps = filterCurrentTimestamps(target.currentTime * 1000, timestamps) || []
+        const filteredTimestamps = filterCurrentTimestamps(target.currentTime * MILLISECONDS_IN_SECOND, timestamps) || []
         dispatch(setRectangles(filteredTimestamps))
-    }
+    }, [timestamps])
 
     return (
         <div className={'container'}>

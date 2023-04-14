@@ -1,11 +1,11 @@
-import React, {ForwardedRef, SyntheticEvent} from 'react';
+import React, {ForwardedRef, memo, SyntheticEvent} from 'react';
 
 interface VideoPlayerProps {
     src: string,
     onTimeUpdate: (event: SyntheticEvent<HTMLVideoElement>) => void,
 }
 
-const VideoPlayer = React.forwardRef(({src, onTimeUpdate}: VideoPlayerProps, ref: ForwardedRef<HTMLVideoElement>) => {
+const VideoPlayer = memo(React.forwardRef(({src, onTimeUpdate}: VideoPlayerProps, ref: ForwardedRef<HTMLVideoElement>) => {
     return (
         <div>
             <video
@@ -19,6 +19,6 @@ const VideoPlayer = React.forwardRef(({src, onTimeUpdate}: VideoPlayerProps, ref
             </video>
         </div>
     );
-});
+}));
 
 export default VideoPlayer;
